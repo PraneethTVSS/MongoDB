@@ -12,6 +12,6 @@
     - Expressions may take a single argument or an array of arguments. This is expression dependant.
 
 Syntax:
-$ ==> field path
-$$UPPER-case system variable
-$$lower-case User variable
+$ ==> field path  
+$$UPPER-case system variable  
+$$lower-case User variable  
