@@ -11,7 +11,7 @@
 - Stages are composed of one or more aggregation operators or expressions.
     - Expressions may take a single argument or an array of arguments. This is expression dependant.
 
-Syntax:
+Syntax:  
 $ ==> field path  
 $$UPPER-case system variable  
 $$lower-case User variable  
