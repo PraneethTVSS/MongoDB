@@ -3,10 +3,13 @@
 ## $match
 
 - `$match` query is used to filter the input data.
+- `$match` uses standard MongoDB read operation query syntax.
 - Eg Query: db.coll.aggregate( [ { $match : {'type': {'$ne': 'Stars'} } } ] )
     - Here we are filtering the coll where the type is not Stars
 - We cannot use $where operator in the $match query.
 - $match should be at beginning of the pipeline.
+- If this is at beginning, it makes use of indexes, we can see the speed of our queries.
+- `$match` doesn't have any mechanism for projection.
 
 ## $project
 
