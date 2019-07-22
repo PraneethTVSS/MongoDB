@@ -13,8 +13,10 @@
 
 ## $project
 
+- Shaping the documents.
 - `$project` is used to retain and remove the fields.
 - It is not only used to retains and remove, we can re-assign and and entirely to get new fields.
+
 - Eg Query: db.coll.aggregate( [ { $project: {'_id': 0, 'name': 1} } ] )
     - Here the output will be the dictionaries with name
 ```bash
