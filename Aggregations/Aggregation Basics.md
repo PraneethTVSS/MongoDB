@@ -56,7 +56,7 @@ db.coll.aggregate( [ {
 
 ## $addFields
 
-- `$addFields` are similar to `$project`. The name refers itself defines it returns the documents with new computed fields or modify the existing fields.
+- `$addFields` are similar to `$project`. The name refers itself defines it returns the documents with new computed fields or modify the existing fields from incoming pipeline.
 - It can add the fields at the higher level dict. We can re-assign the internal fields to the higher level dict.
 - In general, if we want to get certain fields and remove some fields we do like below:
 ```bash
@@ -69,9 +69,33 @@ db.coll.aggregate( [ {$addFields: {gravity: "$gravity.value", mass: "$mass.value
 
 ## $geoNear
 - Used to perform geoqueries within the aggr pipeline. Baiscally it works with Geo-JSON data.
+- $geoNear can be used on charted collections where $near can't.
 - The collection which we are performing the geoNear operations, that should have one and only `2dsphere`.
+- It should only have one index `geoIndex`.
 - If we use `2dsphere`, the distance is returned in meters. If using legacy, the distance is returned in radians.
 - `$geoNear` must be the first stage in an aggregation pipeline.
+```
+$geoNear: {
+    near: {type: "Point", coordinates: [1, 2]},
+    distanceField: <req field to insert in returned docs>,
+    minDistance: <optional, in meters>,
+    maxDistance: <optional, in meters>,
+    query: <optional, allows querying source docs>,
+    includeLocs: <optional, used to identify which location was used>,
+    limit: <optional, the max docs to return>,
+    num: <optional, same as limit>,
+    spherical: <required, required to signal whether using a 2dsphere index>,
+    distanceMultiplier: <optional, the factor to multiply all distances>
+}
+```
+- near: is the point we'd like to search near, it returns the docs from closest to furthest from this location.
+- distanceField: inserted into return docs giving us the distance from the location to location we specified in near. 
+- spherical: true if 2dsphere index is present
+- minDistance, maxDistance: closest, furthest point of data.
+- query: it is like match.
+- includeLocs: it would allow us to show what locations was used in the document if it has more than one location.
+- limit, num: same
+- distanceMultiplier: to convert distance results from radians to any other unit required
 
 ## Cursor like stages
 ### Methods are skip, limit, sort, counts.
