@@ -1,0 +1,25 @@
+# Core Aggregations
+
+## $lookup
+
+- It is used to combine information from 2 collections. It's like left outer join(SQL).
+- Query syntax:
+```bash
+$lookup: {
+  from: < collection to join > // it should not be sharded and should be present in the same database,
+  localField: <field from the input documents>, // a field in working collection where we express the aggregation command that we want to compare to
+  foriegnField: < field from the documents of the "from" collection >, // field want to compare from in the collection we specified in from
+  as: <output array field> // all matches will be put into an array. If this field is already present in the doc, that will be overwritten.
+}
+```
+- This aggregate query performs a strict equality comparision.
+- Eg query:
+```bash
+$lookup: {
+  from: "coll2",
+  localField: "field1 from coll1",
+  foreignField: "field2 from coll2",
+  as: "any name",
+}
+```
+- `$lookup` retrieves the entire document not just the fields that matched or specified.
